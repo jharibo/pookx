@@ -1,5 +1,13 @@
-pook |PyPI| |Coverage Status| |Documentation Status| |Stability| |Quality| |Versions|
-=====================================================================================
+pookx |PyPI| |Documentation Status| |Stability| |Versions|
+==========================================================
+
+**pookx is a maintained fork of** `pook`_ **by** `h2non`_ **and contributors.**
+Upstream development has been quiet, so this fork exists to keep shipping
+fixes and new HTTP client support. It is a drop-in replacement: install
+``pookx`` and keep ``import pook``. The two packages share the same module
+name, so install only one of them in a given environment. The fork is
+happy to contribute its changes back upstream should development resume.
+
 
 Versatile, expressive and hackable utility library for HTTP traffic mocking
 and expectations made easy in `Python`_. Heavily inspired by `gock`_.
@@ -60,13 +68,13 @@ Using ``pip`` package manager (requires pip 1.8+):
 
 .. code:: bash
 
-    pip install --upgrade pook
+    pip install --upgrade pookx
 
 Or install the latest sources from GitHub:
 
 .. code:: bash
 
-    pip install -e git+git://github.com/h2non/pook.git#egg=pook
+    pip install git+https://github.com/jharibo/pook.git
 
 
 Getting started
@@ -266,20 +274,17 @@ MIT - Tomas Aparicio
 .. _FAQ: http://pook.readthedocs.io/en/latest/faq.html
 .. _how it works: http://pook.readthedocs.io/en/latest/how_it_works.html
 .. _mocket: https://github.com/mindflayer/python-mocket
+.. _pook: https://github.com/h2non/pook
+.. _h2non: https://github.com/h2non
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/pook.svg?maxAge=2592000?style=flat-square
-   :target: https://pypi.python.org/pypi/pook
-.. |Coverage Status| image:: https://coveralls.io/repos/github/h2non/pook/badge.svg?branch=master
-   :target: https://coveralls.io/github/h2non/pook?branch=master
+.. |PyPI| image:: https://img.shields.io/pypi/v/pookx.svg?maxAge=2592000?style=flat-square
+   :target: https://pypi.org/project/pookx/
 .. |Documentation Status| image:: https://readthedocs.org/projects/pook/badge/?version=latest
    :target: https://pook.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
-.. |Quality| image:: https://codeclimate.com/github/h2non/pook/badges/gpa.svg
-   :target: https://codeclimate.com/github/h2non/pook
-   :alt: Code Climate
-.. |Stability| image:: https://img.shields.io/pypi/status/pook.svg
-   :target: https://pypi.python.org/pypi/pook
+.. |Stability| image:: https://img.shields.io/pypi/status/pookx.svg
+   :target: https://pypi.org/project/pookx/
    :alt: Stability
-.. |Versions| image:: https://img.shields.io/pypi/pyversions/pook.svg
-   :target: https://pypi.python.org/pypi/pook
+.. |Versions| image:: https://img.shields.io/pypi/pyversions/pookx.svg
+   :target: https://pypi.org/project/pookx/
    :alt: Python Versions

@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pook"
+name = "pookx"
 dynamic = ["version"]
 description = "HTTP traffic mocking and expectations made easy"
 readme = "README.rst"
@@ -11,6 +11,9 @@ license = "MIT"
 authors = [
     { name = "Tomas Aparicio", email = "tomas@aparicio.me" },
     { name = "Sara Marcondes", email = "git@sarayourfriend.pictures" },
+]
+maintainers = [
+    { name = "James Harrison", email = "40500443+jharibo@users.noreply.github.com" },
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -37,7 +40,10 @@ dependencies = [
 requires-python = ">=3.10"
 
 [project.urls]
-Homepage = "https://github.com/h2non/pook"
+Homepage = "https://github.com/jharibo/pook"
+Repository = "https://github.com/jharibo/pook"
+Changelog = "https://github.com/jharibo/pook/blob/master/History.rst"
+Upstream = "https://github.com/h2non/pook"
 
 [project.entry-points.pytest11]
 pook = "pook.pytest_fixture"

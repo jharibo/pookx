@@ -4,18 +4,19 @@ Installation
 PyPI
 ----
 
-You can install the last stable release of pook from PyPI using pip::
+pook is published on PyPI as ``pookx`` (the import name stays ``pook``).
+You can install the last stable release from PyPI using pip::
 
-    $ pip install pook
+    $ pip install pookx
 
 GitHub
 ------
 
 Or install the latest sources from GitHub::
 
-    $ pip install -e git+git://github.com/h2non/pook.git#egg=pook
+    $ pip install git+https://github.com/jharibo/pook.git
 
-You can also download a source code package from `GitHub <https://github.com/h2non/pook/tags>`_ and install it using setuptools::
+You can also download a source code package from `GitHub <https://github.com/jharibo/pook/tags>`_ and install it using setuptools::
 
     $ tar xvf pook-{version}.tar.gz
     $ cd pook
