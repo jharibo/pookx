@@ -55,7 +55,7 @@ the following HTTP clients:
 -  ✔  `requests`_ v2+
 -  ✔  `aiohttp`_ v3+
 -  ✔  `urllib`_ / `http.client`_
--  ✔  `httpx`_ / `httpx2`
+-  ✔  `httpx`_ / `httpx2`_
 
 More HTTP clients can be supported progressively.
 
@@ -266,6 +266,7 @@ MIT - Tomas Aparicio
 .. _examples: http://pook.readthedocs.io/en/latest/examples.html
 .. _aiohttp: https://github.com/KeepSafe/aiohttp
 .. _httpx: https://www.python-httpx.org/
+.. _httpx2: https://pydantic.dev/docs/httpx2/
 .. _requests: http://docs.python-requests.org/en/master/
 .. _urllib3: https://github.com/shazow/urllib3
 .. _urllib: https://docs.python.org/3/library/urllib.html
