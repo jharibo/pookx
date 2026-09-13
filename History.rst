@@ -1,6 +1,23 @@
 History
 =======
 
+v2.2.0 / 2026-09-13
+-------------------------
+
+First release of **pookx**, a maintained fork of `h2non/pook <https://github.com/h2non/pook>`_.
+The distribution name on PyPI is now ``pookx``; the import name remains ``pook``.
+
+What's Changed
+^^^^^^^^^^^^^^
+
+  * interceptors: add support for the ``httpx2`` client
+  * interceptors/aiohttp: support aiohttp 3.14 (``stream_writer``), by @mcepl in https://github.com/h2non/pook/pull/183 (fixes h2non/pook#184)
+  * interceptors/aiohttp: fix ``response.text()`` when the reply has no charset (fixes h2non/pook#185)
+  * Rename distribution to ``pookx`` and point project metadata at the fork
+  * Development environment no longer depends on ``pytest-pook``; the ``pook`` pytest marker now lives in the test suite
+
+**Full Changelog**: https://github.com/jharibo/pook/compare/v2.1.6...v2.2.0
+
 v2.1.6 / 2026-03-07
 -------------------------
 
