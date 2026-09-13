@@ -45,6 +45,17 @@ async def test_await_request(url_404):
 
 
 @pytest.mark.asyncio
+async def test_text_without_charset(url_404):
+    # Regression: a reply with no charset in Content-Type must still decode
+    # via aiohttp's fallback resolver rather than a mocked session attribute.
+    pook.get(url_404).reply(200).body("ok").mock
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url_404) as response:
+            assert "charset" not in response.headers.get("Content-Type", "")
+            assert await response.text() == "ok"
+
+
+@pytest.mark.asyncio
 async def test_binary_body(url_404):
     pook.get(url_404).reply(200).body(BINARY_FILE)
     async with aiohttp.ClientSession() as session:

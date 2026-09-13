@@ -132,6 +132,9 @@ def HTTPResponse(session: aiohttp.ClientSession, *args, **kw):
         timer=TimerNoop(),
         traces=[],
         loop=mock.Mock(),
-        session=mock.Mock(),
+        # The response copies its charset resolver from the session, so this
+        # must be the real session or ``text()`` fails whenever the reply
+        # carries no charset.
+        session=session,
         **kw,
     )
