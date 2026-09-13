@@ -1,0 +1,128 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish, e.g. v2.2.0"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build ${{ inputs.tag }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
+      - name: Install hatch and twine
+        run: |
+          pipx install hatch
+          pipx install twine
+
+      - name: Check the package version matches the tag
+        run: |
+          expected="${TAG#v}"
+          actual="$(hatch version)"
+          if [ "$actual" != "$expected" ]; then
+            echo "::error::package version is $actual but tag is $TAG"
+            exit 1
+          fi
+        env:
+          TAG: ${{ inputs.tag }}
+
+      - name: Build distribution
+        run: hatch build
+
+      - name: Check build
+        run: twine check --strict dist/*
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  publish-pypi:
+    name: publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pookx/
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: create GitHub release
+    needs: publish-pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+
+      - name: Extract release notes from History.rst
+        run: |
+          version="${TAG#v}"
+          # Take this version's section and convert the little RST it uses
+          # (heading underlines, double-backtick literals, `text <url>`_ links)
+          # into Markdown for the release page.
+          awk -v v="$version" '
+            $0 ~ "^v" v " / " { found = 1; next }
+            !found { next }
+            /^v[0-9]+\.[0-9]+\.[0-9]+ \// { exit }
+            /^-+$/ { next }
+            /^\^+$/ { held = "## " held; next }
+            { if (have) print held; held = $0; have = 1 }
+            END { if (have) print held }
+          ' History.rst \
+          | sed -E 's/`([^`<]+) <([^>]+)>`_/[\1](\2)/g; s/``/`/g' > notes.md
+          printf '\nAvailable on PyPI: https://pypi.org/project/pookx/%s/\n' "$version" >> notes.md
+          cat notes.md
+        env:
+          TAG: ${{ inputs.tag }}
+
+      - name: Create release
+        run: |
+          gh release create "$TAG" dist/* \
+            --verify-tag \
+            --title "$TAG" \
+            --notes-file notes.md
+        env:
+          TAG: ${{ inputs.tag }}
+          GH_TOKEN: ${{ github.token }}
