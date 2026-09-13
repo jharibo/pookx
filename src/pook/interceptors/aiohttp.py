@@ -1,3 +1,4 @@
+import inspect
 from http.client import responses as http_reasons
 from typing import Optional
 from unittest import mock
@@ -116,7 +117,14 @@ class SimpleContent(EmptyStreamReader):
 
 
 def HTTPResponse(session: aiohttp.ClientSession, *args, **kw):
-    return session._response_class(
+    response_cls = session._response_class
+
+    # aiohttp 3.14 added a required keyword-only ``stream_writer`` argument.
+    # Only pass it when the installed version expects it.
+    if "stream_writer" in inspect.signature(response_cls.__init__).parameters:
+        kw.setdefault("stream_writer", mock.Mock(output_size=0))
+
+    return response_cls(
         *args,
         request_info=mock.Mock(),
         writer=None,
