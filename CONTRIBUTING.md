@@ -7,7 +7,7 @@
 First, clone the repository:
 
 ```bash
-git clone git@github.com:jharibo/pook.git
+git clone git@github.com:jharibo/pookx.git
 ```
 
 Pook uses [`hatch`](https://hatch.pypa.io/) for script and environment management. Run the `ci` script to set up a development virtual environment and verify your local setup:

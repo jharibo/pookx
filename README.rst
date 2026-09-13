@@ -74,7 +74,7 @@ Or install the latest sources from GitHub:
 
 .. code:: bash
 
-    pip install git+https://github.com/jharibo/pook.git
+    pip install git+https://github.com/jharibo/pookx.git
 
 
 Getting started

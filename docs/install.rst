@@ -14,9 +14,9 @@ GitHub
 
 Or install the latest sources from GitHub::
 
-    $ pip install git+https://github.com/jharibo/pook.git
+    $ pip install git+https://github.com/jharibo/pookx.git
 
-You can also download a source code package from `GitHub <https://github.com/jharibo/pook/tags>`_ and install it using setuptools::
+You can also download a source code package from `GitHub <https://github.com/jharibo/pookx/tags>`_ and install it using setuptools::
 
     $ tar xvf pook-{version}.tar.gz
     $ cd pook

@@ -16,7 +16,7 @@ What's Changed
   * Rename distribution to ``pookx`` and point project metadata at the fork
   * Development environment no longer depends on ``pytest-pook``; the ``pook`` pytest marker now lives in the test suite
 
-**Full Changelog**: https://github.com/jharibo/pook/compare/v2.1.6...v2.2.0
+**Full Changelog**: https://github.com/jharibo/pookx/compare/v2.1.6...v2.2.0
 
 v2.1.6 / 2026-03-07
 -------------------------

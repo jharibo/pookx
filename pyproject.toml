@@ -40,9 +40,9 @@ dependencies = [
 requires-python = ">=3.10"
 
 [project.urls]
-Homepage = "https://github.com/jharibo/pook"
-Repository = "https://github.com/jharibo/pook"
-Changelog = "https://github.com/jharibo/pook/blob/master/History.rst"
+Homepage = "https://github.com/jharibo/pookx"
+Repository = "https://github.com/jharibo/pookx"
+Changelog = "https://github.com/jharibo/pookx/blob/master/History.rst"
 Upstream = "https://github.com/h2non/pook"
 
 [project.entry-points.pytest11]
