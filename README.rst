@@ -47,7 +47,7 @@ the following HTTP clients:
 -  ✔  `requests`_ v2+
 -  ✔  `aiohttp`_ v3+
 -  ✔  `urllib`_ / `http.client`_
--  ✔  `httpx`_
+-  ✔  `httpx`_ / `httpx2`
 
 More HTTP clients can be supported progressively.
 
