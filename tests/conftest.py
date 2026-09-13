@@ -6,6 +6,52 @@ import threading
 
 import pytest
 
+import pook
+
+
+def pytest_configure(config: pytest.Config):
+    config.addinivalue_line(
+        "markers",
+        "pook(allow_pending_mocks, start_active): run the test inside a pook engine "
+        "and verify that every registered mock was used",
+    )
+
+
+@pytest.fixture(autouse=True)
+def _pook_marker(request: pytest.FixtureRequest):
+    """
+    Implements ``@pytest.mark.pook`` for this test suite.
+
+    Marked tests run inside ``pook.use()``. After the test, the engine must
+    have at least one registered mock, and every mock must have been matched
+    unless ``allow_pending_mocks=True``. ``start_active=False`` leaves the
+    engine disabled so the test can enable it itself.
+    """
+    marker = request.node.get_closest_marker("pook")
+    if marker is None:
+        yield
+        return
+
+    allow_pending_mocks = marker.kwargs.get("allow_pending_mocks", False)
+    start_active = marker.kwargs.get("start_active", True)
+
+    with pook.use() as engine:
+        if not start_active:
+            engine.disable()
+
+        yield
+
+        assert (
+            engine.mocks
+        ), "The test is marked with @pytest.mark.pook but registered no mocks."
+        if not allow_pending_mocks:
+            assert engine.isdone(), (
+                "Mocks left unused after the test. Pass allow_pending_mocks=True "
+                f"to the marker if that is intentional. Pending: {engine.pending_mocks()}"
+            )
+
+    assert not engine.isactive()
+
 
 class HttpbinLikeResource:
     def on_get_status(self, req: falcon.Request, resp: falcon.Response, status: int):
