@@ -94,7 +94,9 @@ class FakeChunkedResponseBody:
 
         return chunk
 
-    def readline(self):
+    def readline(self, size=-1):
+        # urllib3 >= 2.8 passes a maximum line length; chunk-size lines
+        # produced by _encode are always far shorter, so it can be ignored.
         return self.read_chunk(whole=True)
 
     def read(self, amt=-1):
