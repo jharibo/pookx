@@ -1,6 +1,16 @@
 History
 =======
 
+v2.2.1 / 2026-09-18
+-------------------------
+
+What's Changed
+^^^^^^^^^^^^^^
+
+  * interceptors/urllib3: fix mocked chunked responses on urllib3 2.8 (``TypeError`` from ``FakeChunkedResponseBody.readline()``) in https://github.com/jharibo/pookx/pull/2
+
+**Full Changelog**: https://github.com/jharibo/pookx/compare/v2.2.0...v2.2.1
+
 v2.2.0 / 2026-09-13
 -------------------------
 
