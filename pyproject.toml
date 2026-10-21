@@ -28,6 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Topic :: Software Development",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
@@ -79,7 +80,7 @@ dependencies = [
     # mocket relies on httptools which does not support PyPy.
     # The "pook" extra is deliberately not used: it would pull the upstream
     # "pook" distribution from PyPI, which shadows this package.
-    "mocket~=3.12.2; platform_python_implementation != 'PyPy'",
+    "mocket~=3.15.0; platform_python_implementation != 'PyPy'",
 ]
 
 [tool.hatch.envs.default.scripts]
@@ -107,7 +108,7 @@ build = "sphinx-build -b html docs docs/_build/html {args}"
 
 [tool.hatch.envs.test]
 [[tool.hatch.envs.test.matrix]]
-python = ["3.10", "3.11", "3.12", "3.13", "3.14", "pypy3.11"]
+python = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15", "pypy3.11"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
