@@ -4,6 +4,13 @@ from ..assertion import equal
 from .base import BaseMatcher, ExistsMatcher
 
 
+def _to_query_value(value):
+    # Query string values are always strings; coerce numeric expectations
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return str(value)
+    return value
+
+
 class QueryMatcher(BaseMatcher):
     """
     QueryMatcher implements an URL query params matcher.
@@ -18,10 +25,10 @@ class QueryMatcher(BaseMatcher):
             if isinstance(param, list):
                 equal(len(param), len(match))
                 for value, expect in zip(param, match):
-                    self.compare(value, expect)
+                    self.compare(_to_query_value(value), expect)
             else:
                 for expect in match:
-                    self.compare(param, expect)
+                    self.compare(_to_query_value(param), expect)
 
             return True
 

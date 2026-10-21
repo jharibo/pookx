@@ -68,3 +68,25 @@ def test_repeated_query_values_missing_key():
     request = Request(url="http://example.com/?other=a")
 
     assert not QueryMatcher({"x": ["a", "b"]}).match(request)
+
+
+@pytest.mark.pook
+def test_params_numeric_value(url_404):
+    pook.get(url_404).params({"x": 1}).reply(200)
+
+    res = urlopen(f"{url_404}?x=1")
+    assert res.status == 200
+
+
+@pytest.mark.parametrize(
+    ("expectation", "query"),
+    [
+        ({"x": 1}, "x=1"),
+        ({"x": 1.5}, "x=1.5"),
+        ({"x": [1, 2]}, "x=1&x=2"),
+    ],
+)
+def test_numeric_query_values_match(expectation, query):
+    request = Request(url=f"http://example.com/?{query}")
+
+    assert QueryMatcher(expectation).match(request)
