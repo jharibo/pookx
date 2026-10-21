@@ -1,6 +1,20 @@
 History
 =======
 
+v2.2.2 / 2026-10-21
+-------------------------
+
+What's Changed
+^^^^^^^^^^^^^^
+
+  * matchers/query: match repeated query parameters such as ``?x=a&x=b`` against a list, in order, by @bensynapse in https://github.com/h2non/pook/pull/187
+  * matchers/query: match numeric values such as ``params({"n": 1})`` against ``?n=1``, by @SAY-5 in https://github.com/h2non/pook/pull/182 (fixes h2non/pook#109)
+  * matchers/query: match empty values such as ``params({"cursor": ""})`` against ``?cursor=``, by @xiehuanyi in https://github.com/h2non/pook/pull/188, suggested by @plaes (fixes h2non/pook#181)
+
+Query matching is now stricter in two cases, which may surface tests that only passed because of the old behaviour: a list must match the exact number of values sent (``["a", "a"]`` no longer matches ``?x=a``), and an empty value requires the parameter to be present (a mock for ``?x=`` no longer matches a request without ``x``).
+
+**Full Changelog**: https://github.com/jharibo/pookx/compare/v2.2.1...v2.2.2
+
 v2.2.1 / 2026-09-18
 -------------------------
 
