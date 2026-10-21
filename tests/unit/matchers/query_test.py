@@ -90,3 +90,29 @@ def test_numeric_query_values_match(expectation, query):
     request = Request(url=f"http://example.com/?{query}")
 
     assert QueryMatcher(expectation).match(request)
+
+
+@pytest.mark.parametrize("expectation", [{"cursor": ""}, "cursor="])
+@pytest.mark.parametrize(
+    "query, matches",
+    [
+        ("?cursor=", True),
+        ("?cursor", True),
+        ("", False),
+        ("?other=", False),
+        ("?cursor=next", False),
+    ],
+)
+def test_blank_query_value(expectation, query, matches):
+    request_mock = pook.Mock()
+    request_mock.url("http://example.test/")
+    request_mock.add_matcher(QueryMatcher(expectation))
+    request = Request(url="http://example.test/" + query)
+    assert request_mock.matchers.match(request)[0] is matches
+
+
+@pytest.mark.pook
+@pytest.mark.parametrize("query", ["?cursor", "?cursor="])
+def test_blank_query_value_request(url_404, query):
+    pook.get(url_404).params({"cursor": ""}).reply(200)
+    assert urlopen(url_404 + query).status == 200
