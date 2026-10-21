@@ -389,6 +389,10 @@ class Mock:
         A scalar value must match every received value for that parameter.
         Other query parameter names are ignored.
 
+        Empty values require the parameter to be present. For example,
+        ``params({"cursor": ""})`` matches ``?cursor`` or ``?cursor=``,
+        but does not match a request without ``cursor``.
+
         Arguments:
             params (dict): set of params to match.
 
